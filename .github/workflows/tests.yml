@@ -1,6 +1,11 @@
 name: Tests
 
 on:
+  # Woechentlicher Lauf: requirements.txt ist nicht gepinnt (>=), CI und Streamlit Cloud installieren also immer
+  # die neuesten Versionen. So faellt ein Bruch durch ein Streamlit-/Plotly-Update auf, bevor der naechste Push
+  # oder Neustart der Demo ihn sichtbar macht. Rote Laeufe meldet demo-health.yml der Website taeglich.
+  schedule:
+    - cron: "6 4 * * 1"
   push:
     branches: [main]
   pull_request:
