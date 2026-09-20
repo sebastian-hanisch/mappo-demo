@@ -1,5 +1,7 @@
 # MAPPO / CTDE (zentraler Kritiker) an der Kran-Auftragsvergabe – Streamlit-Demo
 
+**[→ Demo live ausprobieren](https://sebastianhanisch-mappo-demo.streamlit.app/)**
+
 Fünftes Stück der "Konzepte"-Reihe für die Website "Sebastian Hanisch – Operations
 Research und Machine Learning", **Multi-Agenten-Koordinations-Linie** - **Fortsetzung von
 [marl-demo](../marl-demo)** (unabhängiges Q-Learning), das Contract Net an der Wurzel hat
