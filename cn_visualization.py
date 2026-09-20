@@ -6,6 +6,14 @@ import plotly.graph_objects as go
 AGENT_COLORS = ["#0072B2", "#D55E00", "#009E73", "#CC79A7"]  # Okabe/Ito, farbenblind-sicher
 
 
+def lock_axes(fig):
+    """fixedrange auf beiden Achsen: verhindert Pinch-Zoom/Drag-Pan im Chart, damit auf Touch-Geräten stattdessen die Seite
+    normal gescrollt wird (Hover-Tooltips bleiben davon unberührt)."""
+    fig.update_xaxes(fixedrange=True)
+    fig.update_yaxes(fixedrange=True)
+    return fig
+
+
 def _job_intervals(instance, result, up_to_step):
     """Rekonstruiert für jeden Agenten Start-/Endzeit jedes ihm bis `up_to_step`
     zugeteilten Auftrags, in Vergabereihenfolge (== Bearbeitungsreihenfolge, da jedes
@@ -63,7 +71,7 @@ def build_schedule_figure(instance, result, step, ortools_makespan=None):
         categoryarray=[f"Agent {a + 1}" for a in range(instance.n_agents)],
         autorange="reversed",
     )
-    return fig
+    return lock_axes(fig)
 
 
 def build_bid_chart(step_data):
@@ -84,4 +92,4 @@ def build_bid_chart(step_data):
         height=280,
         margin=dict(l=10, r=10, t=20, b=10),
     )
-    return fig
+    return lock_axes(fig)

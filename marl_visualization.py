@@ -5,7 +5,7 @@ aus `cn_visualization`."""
 import plotly.graph_objects as go
 
 import cn_constants as C
-from cn_visualization import AGENT_COLORS
+from cn_visualization import AGENT_COLORS, lock_axes
 
 CNP_COLOR = "#7F7F7F"
 IQL_COLOR = "#0072B2"
@@ -45,7 +45,7 @@ def build_learning_curve(points, cnp_nominal, ortools_nominal, cnp_heldout_mean,
     fig.update_xaxes(type="log", title="Trainings-Episoden")
     fig.update_yaxes(title="Makespan (min)")
     fig.update_layout(height=360, margin=dict(l=10, r=10, t=20, b=10), legend=dict(orientation="h", y=-0.3))
-    return fig
+    return lock_axes(fig)
 
 
 def build_policy_step_chart(dispatch, step, action_names=C.ACTION_NAMES):
@@ -73,7 +73,7 @@ def build_policy_step_chart(dispatch, step, action_names=C.ACTION_NAMES):
         barmode="group", yaxis_title="Fertigstellungszeit als Gebot (min)", height=320,
         margin=dict(l=10, r=10, t=20, b=10), legend=dict(orientation="h", y=-0.25),
     )
-    return fig
+    return lock_axes(fig)
 
 
 def build_crossplay_heatmap(matrix, seeds, cnp_heldout_mean):
@@ -89,7 +89,7 @@ def build_crossplay_heatmap(matrix, seeds, cnp_heldout_mean):
     fig.update_xaxes(title="Trainingslauf der Agenten 2..n")
     fig.update_yaxes(title="Trainingslauf von Agent 1", autorange="reversed")
     fig.update_layout(height=360, margin=dict(l=10, r=10, t=20, b=10))
-    return fig
+    return lock_axes(fig)
 
 
 def build_lottery_chart(lottery):
@@ -107,7 +107,7 @@ def build_lottery_chart(lottery):
     fig.add_hline(y=0, line_dash="dash", line_color=CNP_COLOR, annotation_text="Contract Net", annotation_position="top left")
     fig.update_yaxes(title="Makespan vs. Contract Net (%)")
     fig.update_layout(height=320, margin=dict(l=10, r=10, t=20, b=10), legend=dict(orientation="h", y=-0.25))
-    return fig
+    return lock_axes(fig)
 
 
 def build_ratio_histogram(ratios_pct):
@@ -119,4 +119,4 @@ def build_ratio_histogram(ratios_pct):
     fig.update_xaxes(title="Makespan vs. Contract Net je Instanz (%; links besser, rechts schlechter)")
     fig.update_yaxes(title="Anzahl Instanzen")
     fig.update_layout(height=300, margin=dict(l=10, r=10, t=20, b=10), showlegend=False)
-    return fig
+    return lock_axes(fig)

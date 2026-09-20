@@ -8,7 +8,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 import cn_constants as C
-from cn_visualization import AGENT_COLORS
+from cn_visualization import AGENT_COLORS, lock_axes
 from mappo_ppo import action_probs
 
 CNP_COLOR = "#7F7F7F"
@@ -46,7 +46,7 @@ def build_learning_curves(curves, cnp_heldout_mean, ortools_heldout_mean, marker
     fig.update_xaxes(type="log", title="Trainings-Episoden", tickvals=ticks, ticktext=[f"{t:,}".replace(",", ".") for t in ticks])
     fig.update_yaxes(title="Makespan, Held-out-Mittel (min)")
     fig.update_layout(height=400, margin=dict(l=10, r=10, t=20, b=10), legend=dict(orientation="h", y=-0.35))
-    return fig
+    return lock_axes(fig)
 
 
 def build_action_probability_chart(trace, step):
@@ -69,7 +69,7 @@ def build_action_probability_chart(trace, step):
         barmode="stack", yaxis=dict(title="Wahrscheinlichkeit", range=[0, 1.15]), height=300,
         margin=dict(l=10, r=10, t=20, b=10), legend=dict(orientation="h", y=-0.25),
     )
-    return fig
+    return lock_axes(fig)
 
 
 def policy_heatmap_data(geom, result, agent=0, job_index=None, resolution=25):
@@ -101,7 +101,7 @@ def build_policy_heatmap(geom, result, agent=0, job_index=None):
         fig.update_xaxes(title_text="eigene Freizeit (min)", row=1, col=col)
     fig.update_yaxes(title_text="Anfahrt (min)", row=1, col=1)
     fig.update_layout(height=320, margin=dict(l=10, r=10, t=40, b=10))
-    return fig, j
+    return lock_axes(fig), j
 
 
 def build_critic_prediction_chart(trace, method):
@@ -128,7 +128,7 @@ def build_critic_prediction_chart(trace, method):
     fig.update_xaxes(title="vor Auftrag", dtick=1)
     fig.update_yaxes(title="vorhergesagter Makespan (min)")
     fig.update_layout(height=300, margin=dict(l=10, r=10, t=20, b=10), legend=dict(orientation="h", y=-0.3))
-    return fig
+    return lock_axes(fig)
 
 
 def build_explained_variance_chart(lab):
@@ -141,7 +141,7 @@ def build_explained_variance_chart(lab):
     ))
     fig.update_yaxes(title="erklärte Varianz des Returns", range=[0, 1.05])
     fig.update_layout(height=300, margin=dict(l=10, r=10, t=20, b=10), showlegend=False)
-    return fig
+    return lock_axes(fig)
 
 
 def build_lottery_comparison(lottery):
@@ -157,4 +157,4 @@ def build_lottery_comparison(lottery):
     fig.add_hline(y=0, line_dash="dash", line_color=CNP_COLOR, annotation_text="Contract Net", annotation_position="top left")
     fig.update_yaxes(title="Held-out-Makespan vs. Contract Net (%)")
     fig.update_layout(height=340, margin=dict(l=10, r=10, t=20, b=10), showlegend=False)
-    return fig
+    return lock_axes(fig)
