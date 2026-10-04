@@ -48,7 +48,7 @@ wegen IQL-Dramatik gewählt wurden - auf unselektierten Szenarien ist IQL wieder
   **Akteur "Tabelle"**: Softmax-Tabelle je Agent über dieselben Buckets wie IQL.
 - **Kritiker**: IPPO - lokal je Agent; MAPPO - zentral (Zustand aller Agenten + aktueller Auftrag), optional
   **privilegiert** (+ Liste der künftigen Aufträge, nur Training).
-- **PPO**: GAE (λ 0,9, γ 1), geclipptes Ziel (ε 0,2, abschaltbar), Entropie 0,01, Adam 3e-3, Batch 100
+- **PPO**: GAE (λ 0,9, γ 1), geclipptes Ziel (ε 0,2, abschaltbar), Entropie 0,01 (Tabelle: 0,03), Adam 3e-3, Batch 100
   Episoden, 4 Epochen x 4 Minibatches, Vorteile pro Batch normiert; numpy-only (kein torch).
 - **Held-out/Seed-Lotterie/Cross-Play** wie marl-demo, jetzt für IQL, IPPO und MAPPO nebeneinander.
 - **Kritiker-Vermessung**: drei Kritiker (lokal/zentral/privilegiert) werden auf denselben Trajektorien
@@ -103,6 +103,4 @@ pytest tests/ -v
 
 ---
 
-Teil des [Operations-Research-Demo-Portfolios](https://sebastianhanisch.net/demos.html) von
-[Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning.
-Interesse an einer maßgeschneiderten Lösung? [Kontakt aufnehmen](https://sebastianhanisch.net/kontakt.html).
+Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zur Reihe: [Multi-Agenten-Koordination erklärt](https://sebastianhanisch.net/konzepte-multiagenten.html).

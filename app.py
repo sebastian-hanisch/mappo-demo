@@ -870,7 +870,7 @@ L = -\mathbb{E}\Big[\min\big(r\,\hat A,\ \text{clip}(r,\ 1-\varepsilon,\ 1+\vare
 $$
 
 Im ungeclippten Bereich ist der Gradient nach den Logits $-\hat A\, r\, (\text{onehot}(u) - \pi)/N$, im geclippten
-Bereich 0. ($\varepsilon = 0.2$, $c_H = 0.01$; "ohne Clipping" setzt $\varepsilon \to \infty$.)
+Bereich 0. ($\varepsilon = 0.2$, $c_H = 0.01$ beim Netz, $0.03$ bei der Tabelle; "ohne Clipping" setzt $\varepsilon \to \infty$.)
 
 **Kritiker-Vermessung.** Erklärte Varianz $1 - \mathbb{E}[(R - V)^2] / \text{Var}(R)$ auf Testtrajektorien, für lokalen,
 zentralen und privilegierten Kritiker auf *denselben* Daten und mit gleicher Netzgröße.
@@ -889,6 +889,6 @@ st.markdown("---")
 
 st.caption(
     "Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – "
-    "Operations Research und Machine Learning. Interesse an einer maßgeschneiderten Lösung für "
-    "Ihr Unternehmen? [Kontakt aufnehmen](https://sebastianhanisch.net/kontakt.html)"
+    "Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). "
+    "Mehr zur Reihe: [Multi-Agenten-Koordination erklärt](https://sebastianhanisch.net/konzepte-multiagenten.html)."
 )
