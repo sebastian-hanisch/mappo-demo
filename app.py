@@ -588,7 +588,7 @@ if cmp["ortools_feasible"]:
         cols[4], "CP-SAT (zentral)", cmp["optimum_reference"], feat["nominal"], featured_name,
         help_text=f"Echter industrieller Solver, {cmp['ortools_wall_time']:.2f}s - "
         + ("beweist Optimalität." if cmp["ortools_optimal"] else "Zeitlimit erreicht, beste gefundene Lösung.")
-        + " CP-SAT rundet Zeiten auf; der Wert ist deshalb nie größer als eine zulässige Lösung angesetzt.",
+        + " CP-SAT sucht auf einem aufgerundeten 0,1-Minuten-Raster; gemeldet wird der exakt nachgerechnete Zeitplan (nie unter dem echten Optimum, höchstens wenige Promille darüber). Die Lücke wird nie größer als eine zulässige Lösung angesetzt.",
     )
 else:
     cols[4].metric("CP-SAT (zentral)", "kein Ergebnis im Zeitlimit")

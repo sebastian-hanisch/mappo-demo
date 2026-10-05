@@ -35,8 +35,28 @@ class ExactResult:
     optimal: bool
     assignment: dict  # job_index -> agent_id
     starts: dict  # job_index -> Startzeit (unskaliert)
-    makespan: float
+    makespan: float  # REALER Makespan der gefundenen Zuteilung+Reihenfolge (ungerundet nachgerechnet)
     wall_time_ms: float
+    model_makespan: float = 0.0  # Zielwert des aufgerundeten CP-SAT-Modells (>= makespan)
+
+
+def _exact_schedule(instance, assignment, scaled_starts):
+    """Exakte (ungerasterte) Zeiten zur Zuteilung und Reihenfolge der CP-SAT-Lösung: je Agent die Aufträge in
+    Startreihenfolge, jeder startet, sobald der Agent da ist. Rückgabe: (Startzeit je Auftrag, Makespan)."""
+    starts = {}
+    makespan = 0.0
+    for agent in range(instance.n_agents):
+        jobs = sorted((j for j, a in assignment.items() if a == agent), key=lambda j: (scaled_starts[j], j))
+        position = instance.agent_start_positions[agent]
+        free_time = 0.0
+        for j in jobs:
+            job = instance.jobs[j]
+            free_time += instance.travel_time(position, job.position)
+            starts[j] = free_time
+            free_time += job.duration
+            position = job.position
+        makespan = max(makespan, free_time)
+    return starts, makespan
 
 
 def build_model(instance):
@@ -104,17 +124,24 @@ def solve_with_ortools(instance, time_limit_seconds=10.0):
         )
 
     assignment = {}
-    starts = {}
+    scaled_starts = {}
     for j in range(n):
         a = next(a for a in range(k) if solver.Value(x[j, a]))
         assignment[j] = a
-        starts[j] = solver.Value(start[j]) / SCALE
+        scaled_starts[j] = solver.Value(start[j])
+
+    # Das Modell rechnet auf einem aufgerundeten Raster (siehe _scaled) und liegt deshalb knapp ÜBER dem echten Wert
+    # derselben Reihenfolge (um wenige Prozent, bei kleinen Instanzen mehr). Gemeldet wird der exakt nachgerechnete, linksbündige
+    # Zeitplan zur gefundenen Zuteilung und Reihenfolge: ein zulässiger Plan, nie schlechter als der Rasterwert und nie
+    # unter dem echten Optimum (sonst würde "dezentral schlägt zentral" als Artefakt erscheinen).
+    starts, makespan_exact = _exact_schedule(instance, assignment, scaled_starts)
 
     return ExactResult(
         feasible=True,
         optimal=status == cp_model.OPTIMAL,
         assignment=assignment,
         starts=starts,
-        makespan=solver.Value(makespan) / SCALE,
+        makespan=makespan_exact,
         wall_time_ms=wall_time_ms,
+        model_makespan=solver.Value(makespan) / SCALE,
     )

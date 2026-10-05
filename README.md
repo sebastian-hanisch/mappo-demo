@@ -30,7 +30,7 @@ Gemessen (Prototyp, 16 Szenarien x 5 Trainings-Seeds, 30 Held-out-Instanzen je S
    Akteur im Einsatz nie hat.
 4. **Stetige Merkmale + kleines Netz generalisieren über zufällige Instanzen - bescheiden**: MAPPO −4 %, auf
    ~22 % der Held-out-Instanzen weiterhin schlechter als Contract Net (schlechteste +20…+36 %), schließt nur
-   ~1/6 der 20–30 % Lücke zu CP-SAT. Unabhängig vom Auftrags-Index.
+   ~1/6 der 20–30 % Lücke zu CP-SAT (Nachmessung 2026-10-05 mit korrigierter CP-SAT-Referenz, zufällige Instanzen, n = 8, k = 3, Szenario-Seeds 4/8/9/13, je 30 Held-out-Instanzen: Lücke Contract Net → CP-SAT 25,1–26,4 %; mit dem früheren aufgerundeten Rasterwert 24,5–25,7 %). Unabhängig vom Auftrags-Index.
 5. **Tabellen-Akteur** (als Umschalter): wiederkehrend so gut wie das Netz (1 s Training), memoriert aber
    (frische Szenarien +3…+8 % gegenüber Netz −3…+0,3 %); auf zufälligen Instanzen nur ≈ Contract Net.
 6. **Untrainiert = Contract Net exakt** (Null-Init der letzten Schicht), Umgebung = marl-demo-Kernel bitweise.

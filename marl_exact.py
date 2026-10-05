@@ -3,7 +3,7 @@ Ankündigungs-Reihenfolge der Aufträge fest (Contract Nets Regel) und wählen n
 welchen Auftrag bekommt - deshalb ist der beste Makespan über alle Zuteilungen in dieser
 festen Reihenfolge (`fixed_order_ceiling`) eine harte Obergrenze für jede gelernte Policy:
 
-    jede Policy >= fixed_order_ceiling >= CP-SAT-Optimum (- Rundung)
+    jede Policy >= fixed_order_ceiling >= CP-SAT-Optimum
 
 Außerdem: die vollständige Enumeration aller gemeinsamen Policies für eine winzige Instanz
 (`enumerate_joint_policies`) - der exakte Beleg für Nicht-Stationarität (siehe README)."""

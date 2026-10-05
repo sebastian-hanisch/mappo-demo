@@ -77,9 +77,10 @@ def comparison(instance, q, heldout, heldout_cnp, heldout_opt, ortools_time_limi
     ortools = solve_with_ortools(instance, time_limit_seconds=ortools_time_limit)
     ortools_makespan = ortools.makespan if ortools.feasible else None
 
-    # CP-SAT rundet Zeiten AUF (siehe cn_ortools_reference): sein Wert kann knapp über einem
-    # tatsächlich erreichbaren Zeitplan liegen. Das echte Optimum ist <= jeder zulässigen
-    # Lösung, deshalb wird die Referenz für Lücken nie größer als CNP oder IQL angesetzt.
+    # CP-SAT sucht auf einem aufgerundeten Raster (siehe cn_ortools_reference), gemeldet wird der exakt nachgerechnete
+    # Zeitplan: nie unter dem echten Optimum, aber wegen des Rasters oder bei Zeitlimit (unbewiesen) wenige Promille
+    # darüber. Das echte Optimum ist <= jeder zulässigen Lösung, deshalb wird die Referenz für Lücken nie größer als
+    # CNP oder IQL angesetzt.
     reference = None if ortools_makespan is None else min(ortools_makespan, cnp_nominal, iql_nominal)
 
     random_nominal = statistics.fmean(
